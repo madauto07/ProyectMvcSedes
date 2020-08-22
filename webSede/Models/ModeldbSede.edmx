@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbsedesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comisarios">
+          <Key>
+            <PropertyRef Name="id_comisario" />
+          </Key>
+          <Property Name="id_comisario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="dni" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Equipos">
+          <Key>
+            <PropertyRef Name="id_equipo" />
+          </Key>
+          <Property Name="id_equipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Eventos">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_complejo" Type="int" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="duracion" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="num_participante" Type="int" />
+          <Property Name="num_comisario" Type="int" />
+          <Property Name="tipo" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Participantes">
+          <Key>
+            <PropertyRef Name="id_participante" />
+          </Key>
+          <Property Name="id_participante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="dni" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="id_sede" />
+          </Key>
+          <Property Name="id_sede" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" />
+          <Property Name="presupuesto" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="tipo_sede" Type="char" MaxLength="13" />
+          <Property Name="num_complejo" Type="int" />
+        </EntityType>
+        <EntityType Name="Sede_Complejo">
+          <Key>
+            <PropertyRef Name="id_complejo" />
+          </Key>
+          <Property Name="id_complejo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_sede" Type="int" />
+          <Property Name="tipo_sede" Type="char" MaxLength="13" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="area" Type="varchar" MaxLength="50" />
+          <Property Name="localizacion" Type="varchar" MaxLength="50" />
+          <Property Name="Jefe_organizacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Eventos_Sede_Complejo">
+          <End Role="Sede_Complejo" Type="Self.Sede_Complejo" Multiplicity="0..1" />
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede_Complejo">
+              <PropertyRef Name="id_complejo" />
+            </Principal>
+            <Dependent Role="Eventos">
+              <PropertyRef Name="id_complejo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sede_Complejo_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Sede_Complejo" Type="Self.Sede_Complejo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id_sede" />
+            </Principal>
+            <Dependent Role="Sede_Complejo">
+              <PropertyRef Name="id_sede" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbsedesModelStoreContainer">
+          <EntitySet Name="Comisarios" EntityType="Self.Comisarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipos" EntityType="Self.Equipos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eventos" EntityType="Self.Eventos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participantes" EntityType="Self.Participantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sede" EntityType="Self.Sede" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sede_Complejo" EntityType="Self.Sede_Complejo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Eventos_Sede_Complejo" Association="Self.FK_Eventos_Sede_Complejo">
+            <End Role="Sede_Complejo" EntitySet="Sede_Complejo" />
+            <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sede_Complejo_Sede" Association="Self.FK_Sede_Complejo_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Sede_Complejo" EntitySet="Sede_Complejo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbsedesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comisarios">
+          <Key>
+            <PropertyRef Name="id_comisario" />
+          </Key>
+          <Property Name="id_comisario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Equipos">
+          <Key>
+            <PropertyRef Name="id_equipo" />
+          </Key>
+          <Property Name="id_equipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Eventos">
+          <Key>
+            <PropertyRef Name="id_evento" />
+          </Key>
+          <Property Name="id_evento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_complejo" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="duracion" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="num_participante" Type="Int32" />
+          <Property Name="num_comisario" Type="Int32" />
+          <Property Name="tipo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sede_Complejo" Relationship="Self.FK_Eventos_Sede_Complejo" FromRole="Eventos" ToRole="Sede_Complejo" />
+        </EntityType>
+        <EntityType Name="Participantes">
+          <Key>
+            <PropertyRef Name="id_participante" />
+          </Key>
+          <Property Name="id_participante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="id_sede" />
+          </Key>
+          <Property Name="id_sede" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="presupuesto" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="tipo_sede" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="num_complejo" Type="Int32" />
+          <NavigationProperty Name="Sede_Complejo" Relationship="Self.FK_Sede_Complejo_Sede" FromRole="Sede" ToRole="Sede_Complejo" />
+        </EntityType>
+        <EntityType Name="Sede_Complejo">
+          <Key>
+            <PropertyRef Name="id_complejo" />
+          </Key>
+          <Property Name="id_complejo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_sede" Type="Int32" />
+          <Property Name="tipo_sede" Type="String" MaxLength="13" FixedLength="true" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="localizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Jefe_organizacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Eventos" Relationship="Self.FK_Eventos_Sede_Complejo" FromRole="Sede_Complejo" ToRole="Eventos" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Sede_Complejo_Sede" FromRole="Sede_Complejo" ToRole="Sede" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Eventos_Sede_Complejo">
+          <End Role="Sede_Complejo" Type="Self.Sede_Complejo" Multiplicity="0..1" />
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede_Complejo">
+              <PropertyRef Name="id_complejo" />
+            </Principal>
+            <Dependent Role="Eventos">
+              <PropertyRef Name="id_complejo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sede_Complejo_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Sede_Complejo" Type="Self.Sede_Complejo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id_sede" />
+            </Principal>
+            <Dependent Role="Sede_Complejo">
+              <PropertyRef Name="id_sede" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbsedesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comisarios" EntityType="Self.Comisarios" />
+          <EntitySet Name="Equipos" EntityType="Self.Equipos" />
+          <EntitySet Name="Eventos" EntityType="Self.Eventos" />
+          <EntitySet Name="Participantes" EntityType="Self.Participantes" />
+          <EntitySet Name="Sede" EntityType="Self.Sede" />
+          <EntitySet Name="Sede_Complejo" EntityType="Self.Sede_Complejo" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Eventos_Sede_Complejo" Association="Self.FK_Eventos_Sede_Complejo">
+            <End Role="Sede_Complejo" EntitySet="Sede_Complejo" />
+            <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sede_Complejo_Sede" Association="Self.FK_Sede_Complejo_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Sede_Complejo" EntitySet="Sede_Complejo" />
+          </AssociationSet>
+          <EntitySet Name="Usuario" EntityType="dbsedesModel.Usuario" />
+        </EntityContainer>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbsedesModelStoreContainer" CdmEntityContainer="dbsedesEntities">
+          <EntitySetMapping Name="Comisarios">
+            <EntityTypeMapping TypeName="dbsedesModel.Comisarios">
+              <MappingFragment StoreEntitySet="Comisarios">
+                <ScalarProperty Name="id_comisario" ColumnName="id_comisario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipos">
+            <EntityTypeMapping TypeName="dbsedesModel.Equipos">
+              <MappingFragment StoreEntitySet="Equipos">
+                <ScalarProperty Name="id_equipo" ColumnName="id_equipo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eventos">
+            <EntityTypeMapping TypeName="dbsedesModel.Eventos">
+              <MappingFragment StoreEntitySet="Eventos">
+                <ScalarProperty Name="id_evento" ColumnName="id_evento" />
+                <ScalarProperty Name="id_complejo" ColumnName="id_complejo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="duracion" ColumnName="duracion" />
+                <ScalarProperty Name="num_participante" ColumnName="num_participante" />
+                <ScalarProperty Name="num_comisario" ColumnName="num_comisario" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participantes">
+            <EntityTypeMapping TypeName="dbsedesModel.Participantes">
+              <MappingFragment StoreEntitySet="Participantes">
+                <ScalarProperty Name="id_participante" ColumnName="id_participante" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sede">
+            <EntityTypeMapping TypeName="dbsedesModel.Sede">
+              <MappingFragment StoreEntitySet="Sede">
+                <ScalarProperty Name="id_sede" ColumnName="id_sede" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="presupuesto" ColumnName="presupuesto" />
+                <ScalarProperty Name="tipo_sede" ColumnName="tipo_sede" />
+                <ScalarProperty Name="num_complejo" ColumnName="num_complejo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sede_Complejo">
+            <EntityTypeMapping TypeName="dbsedesModel.Sede_Complejo">
+              <MappingFragment StoreEntitySet="Sede_Complejo">
+                <ScalarProperty Name="id_complejo" ColumnName="id_complejo" />
+                <ScalarProperty Name="id_sede" ColumnName="id_sede" />
+                <ScalarProperty Name="tipo_sede" ColumnName="tipo_sede" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="localizacion" ColumnName="localizacion" />
+                <ScalarProperty Name="Jefe_organizacion" ColumnName="Jefe_organizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="dbsedesModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="dbsedesModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,64 @@
+﻿@model webSede.Models.Sede
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>Confirmar para borrar.</h3>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.presupuesto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.presupuesto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo_sede)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_sede)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.num_complejo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.num_complejo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirmar" class="btn btn-default" /> |
+            @Html.ActionLink("regresar", "Index")
+        </div>
+    }
+</div>

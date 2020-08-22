@@ -1,0 +1,66 @@
+﻿@model webSede.Models.Sede_Complejo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sede_Complejo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tipo_sede)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo_sede)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.area)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.area)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.localizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.localizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jefe_organizacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jefe_organizacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sede.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sede.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_complejo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
